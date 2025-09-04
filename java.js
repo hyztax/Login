@@ -147,40 +147,63 @@ document.getElementById('qrPrompt').onclick = function(e) {
         clearInterval(qrInterval);
     }
 };
-
-document.getElementById('forgotLink').onclick = function(e) {
-    e.preventDefault();
+      // Show the forgot password frame
+document.getElementById('forgotLink').addEventListener('click', function(event) {
+    event.preventDefault();
     document.getElementById('forgotFrame').style.display = 'flex';
-};
+});
 
-document.getElementById('closeForgot').onclick = function() {
+// Close the forgot password frame
+document.getElementById('closeForgot').addEventListener('click', function() {
     document.getElementById('forgotFrame').style.display = 'none';
-    document.getElementById('forgotMsg').style.display = 'none';
-};
+});
 
-document.getElementById('sendForgotBtn').onclick = async function() {
-    const email = document.getElementById('forgotEmail').value;
-    if (!email) return;
+// Send forgot password email
+document.getElementById('sendForgotBtn').addEventListener('click', async function() {
+    const emailInput = document.getElementById('forgotEmail');
+    const email = emailInput.value.trim();
+    const msg = document.getElementById('forgotMsg');
 
-    // Call backend API to send email
+    // Clear previous message
+    msg.style.display = 'none';
+    msg.textContent = '';
+
+    // Simple email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        msg.style.display = 'block';
+        msg.textContent = 'Please enter a valid email address.';
+        msg.style.color = '#f44336';
+        return;
+    }
+
     try {
+        // Disable button while sending
+        this.disabled = true;
+        this.textContent = 'Sending...';
+
+        // Attempt to send email no matter what
         const response = await fetch('/api/send-forgot-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
         });
-        if (response.ok) {
-            document.getElementById('forgotMsg').style.display = 'block';
-            document.getElementById('forgotMsg').textContent = 'Email sent successfully.';
-            document.getElementById('forgotMsg').style.color = '#4CAF50';
-        } else {
-            document.getElementById('forgotMsg').style.display = 'block';
-            document.getElementById('forgotMsg').textContent = 'Failed to send email.';
-            document.getElementById('forgotMsg').style.color = '#f44336';
-        }
+
+        let data = {};
+        try { data = await response.json(); } catch {}
+
+        // Always show success message even if email doesn't exist in DB
+        msg.style.display = 'block';
+        msg.textContent = data.message || 'Successfully sent a reset code to your email.';
+        msg.style.color = '#4CAF50';
+
     } catch (err) {
-        document.getElementById('forgotMsg').style.display = 'block';
-        document.getElementById('forgotMsg').textContent = 'Error sending email.';
-        document.getElementById('forgotMsg').style.color = '#f44336';
+        console.error('Error sending email:', err);
+        msg.style.display = 'block';
+        msg.textContent = 'Error sending email.';
+        msg.style.color = '#f44336';
+    } finally {
+        this.disabled = false;
+        this.textContent = 'Send';
     }
-};
+});
