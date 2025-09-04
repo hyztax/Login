@@ -1,0 +1,39 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: #232527;
+    color: white;
+    height: auto;      /* fixes height */
+    margin: 0;          /* removes default margin */
+
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centers vertically */
+    align-items: center;     /* centers horizontally */
+}
+
+.message-title {
+    text-align: center; /* centers the text inside the h1 */
+    width: 100%; /* ensures the title spans the container */
+}
+
+.message-text {
+    text-align: center; /* centers the paragraph text */
+    width: 100%;        /* ensures it spans the container */
+}
+
+.redirecting {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically */
+    width: 100%;
+    text-align: center;
+    position: absolute; /* take it out of flow */
+    top: 95%;           /* move to vertical center */
+    left: 50%;          /* move to horizontal center */
+    transform: translate(-50%, -50%); /* perfectly center */
+    margin: 0; /* no extra margin */
+}

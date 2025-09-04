@@ -4,6 +4,7 @@ body {
     background-color: #232527;
     color: white;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 .container {
@@ -103,7 +104,7 @@ body {
 }
 
 .signup-btn {
-    background-color: #00a2ff;
+    background-color: #303131;
     color: white;
     border: none;
     border-radius: 4px;
@@ -115,7 +116,7 @@ body {
 }
 
 .signup-btn:hover {
-    background-color: #0084cc;
+    background-color: #242323;
 }
 
 /* Login Form Styles */
@@ -256,4 +257,21 @@ body {
         padding: 24px;
         margin: 0 16px;
     }
+}
+
+/* Tester Title - global style */
+.Tester_title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px #000000, 0 0 20px #0c0b0b;
+    background: transparent;
+    
+    /* Move text further down */
+    position: relative;
+    top: 100px; /* adjust this value to move it more/less down */
 }

