@@ -200,7 +200,7 @@ document.getElementById('sendForgotBtn').addEventListener('click', async functio
     } catch (err) {
         console.error('Error sending email:', err);
         msg.style.display = 'block';
-        msg.textContent = 'Error sending email.';
+        msg.textContent = 'Failed to reach mail';
         msg.style.color = '#f44336';
     } finally {
         this.disabled = false;
