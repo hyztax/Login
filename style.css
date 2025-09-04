@@ -13,8 +13,40 @@ body {
     
     color: #ffffff;
     min-height: 100vh;
-    overflow: hidden;
+
+    /* Hide scrollbar on desktop */
+    overflow-y: hidden;
 }
+
+/* For webkit browsers */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Mobile: enable scrolling */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    body::-webkit-scrollbar {
+        display: block; /* Show scrollbar on mobile if needed */
+        width: 6px; /* Optional: thin scrollbar */
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+}
+
+/* Optional gradient animation */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 
 /* Animation for subtle background movement */
 @keyframes gradientBG {
@@ -293,6 +325,13 @@ body {
     /* Move text further down */
     position: relative;
     top: 100px; /* adjust this value to move it more/less down */
+}
+/* On mobile devices (phones/tablets) */
+@media (max-width: 768px) {
+    .Tester_title {
+        top: 30px; /* move higher on mobile */
+        font-size: 1.8rem; /* optional: slightly smaller for mobile */
+    }
 }
 
                     #qrPrompt {
