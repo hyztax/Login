@@ -1,11 +1,28 @@
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: #232527;
-    color: white;
+    /* Gradient background for depth */
+    background: linear-gradient(135deg, #020202, #222224, #020202);
+    
+    /* Subtle glow inset for modern feel */
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);
+    
+    /* Optional animated gradient for extra flair */
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
+    
+    color: #ffffff;
     min-height: 100vh;
     overflow: hidden;
 }
+
+/* Animation for subtle background movement */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 
 .container {
     min-height: 100vh;
@@ -15,12 +32,12 @@ body {
 
 /* Navigation Styles */
 .navbar {
-    background-color: #393b3d;
+    background-color: #0d0d0e;
     padding: 12px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #4a4c4e;
+    border-bottom: 1px solid #0f0f0f;
 }
 
 .nav-left {
@@ -37,7 +54,7 @@ body {
 .logo-square {
     width: 32px;
     height: 32px;
-    background-color: white;
+    background-color: rgb(37, 37, 37);
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -129,7 +146,7 @@ body {
 }
 
 .login-card {
-    background-color: #393b3d;
+    background-color: #34393f71;
     border-radius: 8px;
     padding: 40px;
     width: 100%;
@@ -153,7 +170,7 @@ body {
 }
 
 .form-input {
-    background-color: #4a4c4e;
+    background-color: #03142500;
     border: 1px solid #5a5c5e;
     border-radius: 4px;
     padding: 12px 16px;
@@ -168,12 +185,13 @@ body {
 
 .form-input:focus {
     outline: none;
-    border-color: #00a2ff;
+    border-color: #9e9fa0;
 }
 
 .login-btn {
     background-color: transparent;
     color: #bdbebf;
+    background-color: #1c1f223f;
     border: 1px solid #5a5c5e;
     border-radius: 4px;
     padding: 12px 16px;
@@ -185,7 +203,7 @@ body {
 }
 
 .login-btn:hover {
-    background-color: #4a4c4e;
+    background-color: #36413f36;
     color: white;
 }
 
@@ -207,11 +225,12 @@ body {
     flex-direction: column;
     gap: 12px;
     margin-bottom: 32px;
+
 }
 
 .alt-btn {
-    background-color: #4a4c4e;
-    color: #bdbebf;
+    background-color: #1a19193f;
+    color: #205d9b;
     border: none;
     border-radius: 4px;
     padding: 12px 16px;
@@ -221,8 +240,8 @@ body {
 }
 
 .alt-btn:hover {
-    background-color: #5a5c5e;
-    color: white;
+    background-color: #3b3a3a7e;
+    color: rgb(132, 132, 134);
 }
 
 .signup-text {
@@ -275,3 +294,29 @@ body {
     position: relative;
     top: 100px; /* adjust this value to move it more/less down */
 }
+
+                    #qrPrompt {
+                        background: rgba(0,0,0,0.85) !important;
+                        display: none;
+                        position: fixed;
+                        top: 0; left: 0;
+                        width: 100vw; height: 100vh;
+                        align-items: center; justify-content: center;
+                        z-index: 999;
+                    }
+                    #qrPrompt > div {
+                        background: #181818 !important;
+                        padding: 16px;
+                        border-radius: 8px;
+                        text-align: center;
+                        position: relative;
+                        min-width: 220px;
+                        max-width: 260px;
+                        box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+                    }
+                    #qrImage {
+                        width: 180px;
+                        height: 180px;
+                        display: block;
+                        margin: 0 auto;
+                    }

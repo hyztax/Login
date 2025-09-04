@@ -1,11 +1,27 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: #232527;
-    color: white;
-    height: auto;      /* fixes height */
-    margin: 0;          /* removes default margin */
-
+    /* Gradient background for depth */
+    background: linear-gradient(135deg, #020202, #222224, #020202);
+    
+    /* Subtle glow inset for modern feel */
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);
+    
+    /* Optional animated gradient for extra flair */
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
+    
+    color: #ffffff;
+    min-height: 100vh;
+    overflow: hidden;
 }
+
+/* Animation for subtle background movement */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 
 .container {
     min-height: 100vh;

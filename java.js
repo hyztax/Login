@@ -105,3 +105,82 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Login form not found');
     }
 });
+
+function randomString(len) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let str = '';
+    for (let i = 0; i < len; i++) {
+        str += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return str;
+}
+
+function updateQrCode() {
+    const data = randomString(16);
+    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(data);
+    document.getElementById('qrImage').src = qrUrl;
+}
+
+document.getElementById('qrBtn').onclick = function() {
+    updateQrCode();
+    document.getElementById('qrPrompt').style.display = 'flex';
+};
+
+// Change QR code every 2 seconds while modal is open
+let qrInterval = null;
+document.getElementById('qrBtn').onclick = function() {
+    updateQrCode();
+    document.getElementById('qrPrompt').style.display = 'flex';
+    qrInterval = setInterval(updateQrCode, 2000);
+};
+
+// Close when clicking the close button
+document.getElementById('closeQr').onclick = function() {
+    document.getElementById('qrPrompt').style.display = 'none';
+    clearInterval(qrInterval);
+};
+
+// Close when clicking outside the QR modal
+document.getElementById('qrPrompt').onclick = function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+        clearInterval(qrInterval);
+    }
+};
+
+document.getElementById('forgotLink').onclick = function(e) {
+    e.preventDefault();
+    document.getElementById('forgotFrame').style.display = 'flex';
+};
+
+document.getElementById('closeForgot').onclick = function() {
+    document.getElementById('forgotFrame').style.display = 'none';
+    document.getElementById('forgotMsg').style.display = 'none';
+};
+
+document.getElementById('sendForgotBtn').onclick = async function() {
+    const email = document.getElementById('forgotEmail').value;
+    if (!email) return;
+
+    // Call backend API to send email
+    try {
+        const response = await fetch('/api/send-forgot-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        if (response.ok) {
+            document.getElementById('forgotMsg').style.display = 'block';
+            document.getElementById('forgotMsg').textContent = 'Email sent successfully.';
+            document.getElementById('forgotMsg').style.color = '#4CAF50';
+        } else {
+            document.getElementById('forgotMsg').style.display = 'block';
+            document.getElementById('forgotMsg').textContent = 'Failed to send email.';
+            document.getElementById('forgotMsg').style.color = '#f44336';
+        }
+    } catch (err) {
+        document.getElementById('forgotMsg').style.display = 'block';
+        document.getElementById('forgotMsg').textContent = 'Error sending email.';
+        document.getElementById('forgotMsg').style.color = '#f44336';
+    }
+};
