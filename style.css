@@ -324,27 +324,22 @@ body::-webkit-scrollbar {
 
 /* Tester Title - global style */
 .Tester_title {
-    display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100px;
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 5vw, 2.5rem); /* responsive font size */
     font-weight: bold;
     color: #fff;
-    text-shadow: 0 0 10px #000000, 0 0 20px #0c0b0b;
+    text-shadow: 
+        0 0 5px #000,
+        0 0 10px #302f2f,
+        0 0 20px #000000,
+        0 0 30px #000000;
     background: transparent;
-    
-    /* Move text further down */
-    position: relative;
-    top: 100px; /* adjust this value to move it more/less down */
+    margin-top: 10vh; /* space from top, relative to viewport */
+    text-align: center;
 }
-/* On mobile devices (phones/tablets) */
-@media (max-width: 768px) {
-    .Tester_title {
-        top: 30px; /* move higher on mobile */
-        font-size: 1.8rem; /* optional: slightly smaller for mobile */
-    }
-}
+
+/* If you want extra control for small devices */
+
 
                     #qrPrompt {
                         background: rgba(0,0,0,0.85) !important;
@@ -433,3 +428,25 @@ body::-webkit-scrollbar {
             color: #4caf50;
             display: none;
         }
+
+        .login-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff; 
+    text-align: center;
+}
+
+.login-title .velox-text {
+    background: linear-gradient(90deg, #6283bd, #2575fc, #89bfff, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 100%;
+    animation: shine 3s linear infinite;
+}
+
+/* Gradient animation */
+@keyframes shine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
