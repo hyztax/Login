@@ -13,10 +13,18 @@ body {
     
     color: #ffffff;
     min-height: 100vh;
-
-    /* Hide scrollbar on desktop */
-    overflow-y: hidden;
+    overflow: hidden;
 }
+
+
+
+/* Animation for subtle background movement */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 
 /* For webkit browsers */
 body::-webkit-scrollbar {
@@ -177,6 +185,8 @@ body::-webkit-scrollbar {
     padding: 40px 20px;
 }
 
+
+
 .login-card {
     background-color: #34393f71;
     border-radius: 8px;
@@ -185,6 +195,8 @@ body::-webkit-scrollbar {
     max-width: 400px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
+
 
 .login-title {
     font-size: 28px;
