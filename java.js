@@ -20,18 +20,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const displayName = userDoc.data().displayName;
 
-            // Save current user in localStorage
+            // Save current user in localStorage (optional)
             localStorage.setItem("currentUserId", userId);
             localStorage.setItem("currentDisplayName", displayName);
 
-            // Add to logged-in users collection in Firestore
+            // Add user to loggedInUsers collection in Firestore
             await db.collection("loggedInUsers").doc(userId).set({
                 displayName: displayName,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
 
-            // Redirect to users.html with displayName for success message
-            window.location.href = `users.html?userId=${encodeURIComponent(userId)}&displayName=${encodeURIComponent(displayName)}`;
+            // Redirect to users.html
+            window.location.href = "users.html";
         } catch (error) {
             console.error(error);
             alert("Error checking user. Please try again later.");

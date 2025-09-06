@@ -19,35 +19,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const usersList = document.getElementById("usersList");
 
-  // Function to render a user in the list
-  const renderUser = (name) => {
-    const li = document.createElement("li");
-    li.textContent = name;
-    usersList.appendChild(li);
-  };
-
   // Get current user from localStorage
   const currentDisplayName = localStorage.getItem("currentDisplayName");
 
-  // Render current user first
+  // Render the current user immediately
   if (currentDisplayName) {
-    renderUser(currentDisplayName);
+    const li = document.createElement("li");
+    li.textContent = currentDisplayName;
+    usersList.appendChild(li);
   }
 
-  // Listen to loggedInUsers and render all users except current
+  // Listen to loggedInUsers collection and render all users
   db.collection("loggedInUsers")
     .orderBy("timestamp")
     .onSnapshot(snapshot => {
-      // Clear list first
+      // Clear all except current user
       usersList.innerHTML = "";
-
-      // Render current user first
-      if (currentDisplayName) renderUser(currentDisplayName);
+      if (currentDisplayName) {
+        const li = document.createElement("li");
+        li.textContent = currentDisplayName;
+        usersList.appendChild(li);
+      }
 
       snapshot.docs.forEach(doc => {
         const data = doc.data();
         if (data.displayName && data.displayName !== currentDisplayName) {
-          renderUser(data.displayName);
+          const li = document.createElement("li");
+          li.textContent = data.displayName;
+          usersList.appendChild(li);
         }
       });
     });
