@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyBXb9OhOEOo4gXNIv2WcCNmXfnm1x7R2EM",
     authDomain: "velox-c39ad.firebaseapp.com",
@@ -10,53 +9,46 @@ document.addEventListener("DOMContentLoaded", async () => {
     measurementId: "G-X8W755KRF6"
   };
 
-  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
   const db = firebase.firestore();
 
-  // Sign in anonymously so Firestore rules allow reads
-  try {
-    await auth.signInAnonymously();
-  } catch (err) {
-    console.error("Anonymous Auth error:", err);
-    alert("Failed to authenticate. Try again later.");
-    return;
-  }
+  const successMessage = document.getElementById("success-message");
+  successMessage.style.display = "block";
+  successMessage.querySelector(".message-title").textContent =
+    `You have successfully claimed the role [tester]`;
 
-  // Show success message if username in URL
-  const params = new URLSearchParams(window.location.search);
-  const username = params.get("username");
-  if (username) {
-    const successMessage = document.getElementById("success-message");
-    successMessage.style.display = "block";
-    successMessage.querySelector(".message-title").textContent =
-      `You have successfully claimed the role, ${username}!`;
-  }
-
-  // Populate logged-in users list with displayName
   const usersList = document.getElementById("usersList");
 
+  // Function to render a user in the list
+  const renderUser = (name) => {
+    const li = document.createElement("li");
+    li.textContent = name;
+    usersList.appendChild(li);
+  };
+
+  // Get current user from localStorage
+  const currentDisplayName = localStorage.getItem("currentDisplayName");
+
+  // Render current user first
+  if (currentDisplayName) {
+    renderUser(currentDisplayName);
+  }
+
+  // Listen to loggedInUsers and render all users except current
   db.collection("loggedInUsers")
     .orderBy("timestamp")
-    .onSnapshot(async snapshot => {
+    .onSnapshot(snapshot => {
+      // Clear list first
       usersList.innerHTML = "";
 
-      for (const doc of snapshot.docs) {
-        const li = document.createElement("li");
+      // Render current user first
+      if (currentDisplayName) renderUser(currentDisplayName);
 
-        // Get displayName from the "users" collection
-        try {
-          const userDoc = await db.collection("users").doc(doc.id).get();
-          li.textContent = userDoc.exists
-            ? userDoc.data().displayName
-            : doc.id;
-        } catch (err) {
-          console.error("Error fetching displayName:", err);
-          li.textContent = doc.id;
+      snapshot.docs.forEach(doc => {
+        const data = doc.data();
+        if (data.displayName && data.displayName !== currentDisplayName) {
+          renderUser(data.displayName);
         }
-
-        usersList.appendChild(li);
-      }
+      });
     });
 });

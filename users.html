@@ -9,32 +9,27 @@
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>  
   <!-- Users JS -->
   <script src="users.js" defer></script>
   <link rel="icon" href="logger.images/Velox_logo.png" type="image/png">
-
 </head>
 <body>
 <div class="container" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center;">
   
   <!-- Success message -->
-  <div class="message-card" id="success-message">
+  <div class="message-card" id="success-message" style="display: none;">
     <h1 class="message-title" style="color: rgb(207, 207, 207);">
-      You have successfully claimed the <span style="color: rgb(99, 13, 13);">[tester]</span> role!
+      <!-- Will be dynamically filled by users.js -->
     </h1>
   </div>
 
   <!-- Logged-in users list -->
-<h1 class="connected-users">
-  <span class="user-icon">&#128101;</span> Connected Users
-</h1>
+  <h1 class="connected-users">
+    <span class="user-icon">&#128101;</span> Connected Users
+  </h1>
 
   <ul id="usersList" style="list-style: none; padding: 0; margin-top: 10px;"></ul>
 
 </div>
-
-
-
 </body>
 </html>

@@ -10,54 +10,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     measurementId: "G-X8W755KRF6"
   };
 
+  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
   const db = firebase.firestore();
-
-  try {
-    await auth.signInAnonymously();
-  } catch (err) {
-    console.error("Anonymous Auth error:", err);
-    alert("Failed to authenticate. Try again later.");
-    return;
-  }
 
   const loginForm = document.getElementById("loginForm");
 
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const enteredName = document.getElementById("username").value.trim();
-    if (!enteredName) return alert("Please enter your display name.");
+    const enteredId = document.getElementById("username").value.trim();
+    if (!enteredId) return alert("Please enter your user ID.");
 
     try {
-      // Query users collection for displayName match
-      const usersSnapshot = await db.collection("users").where("displayName", "==", enteredName).get();
+      // Check the document by ID
+      const userDoc = await db.collection("users").doc(enteredId).get();
 
-      if (usersSnapshot.empty) {
-        alert("No user found with that display name. Please register first.");
+      if (!userDoc.exists) {
+        alert("No user found with that ID. Please register first.");
         return;
       }
 
-      // There should be only one match
-      const userDoc = usersSnapshot.docs[0];
-      const userId = userDoc.id;
       const displayName = userDoc.data().displayName;
 
       // Save in localStorage
-      localStorage.setItem("currentUserId", userId);
+      localStorage.setItem("currentUserId", enteredId);
       localStorage.setItem("currentDisplayName", displayName);
 
-      // Add to logged-in users collection
-      await db.collection("loggedInUsers").doc(userId).set({
-        displayName: displayName,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      });
-
-      // Redirect with username & displayName in URL
-      window.location.href = `users.html?userId=${encodeURIComponent(userId)}&displayName=${encodeURIComponent(displayName)}`;
+      // Redirect with ID and displayName in URL
+      window.location.href = `users.html?userId=${encodeURIComponent(enteredId)}&displayName=${encodeURIComponent(displayName)}`;
     } catch (err) {
       console.error("Firestore error:", err);
-      alert("Failed to check username. Try again later.");
+      alert("Failed to check user. Try again later.");
     }
   });
 });
