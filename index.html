@@ -13,39 +13,42 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
   <!-- Login JS -->
-  <script src="login.js" defer></script>
+  <script src="java.js" defer></script>
   
   <link rel="icon" href="logger.images/Velox_logo.png" type="image/png">
 </head>
 <body>
   <div class="container">
-   <!-- Navbar -->
-<nav class="navbar">
-  <div class="nav-left">
-    <div class="logo">
-      <a href="index.html">
-        <div class="logo-square">
-          <img src="logger.images/Velox_circle.png" alt="Roblox Logo" style="width:32px;height:32px; transform: rotate(-0deg);">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-left">
+        <div class="logo">
+          <a href="index.html">
+            <div class="logo-square">
+              <img src="logger.images/Velox_circle.png" alt="Velox Logo" style="width:32px;height:32px;">
+            </div>
+          </a>
         </div>
-      </a>
-    </div>
-    <div class="nav-links">
-      <a href="https://hyztax.github.io/Velox/" class="nav-link">Velox</a>
-      <a href="https://payhip.com/VeloxStore" class="nav-link">Shop</a>
-      <a href="https://discord.gg/Cp2BSuz7kh" class="nav-link">Discord</a>
-    </div>
-  </div>
-</nav>
-
+        <div class="nav-links">
+          <a href="https://hyztax.github.io/Velox/" class="nav-link">Velox</a>
+          <a href="https://payhip.com/VeloxStore" class="nav-link">Shop</a>
+          <a href="https://discord.gg/Cp2BSuz7kh" class="nav-link">Discord</a>
+        </div>
+      </div>
+    </nav>
 
     <div class="Tester_title">Claim the new&nbsp;<span style="color: rgb(99, 13, 13);">[tester]</span>&nbsp;role!</div>
 
     <!-- Login Form -->
     <div class="login-container">
       <div class="login-card">
-       <h1 class="login-title">Connect your <span class="velox-text">Velox</span> account</h1>
+        <h1 class="login-title">Connect your <span class="velox-text">Velox</span> account</h1>
         <form id="loginForm" class="login-form">
-          <input type="text" id="username" placeholder="Enter Username" class="form-input" required>
+          
+          <!-- Separate User ID label -->
+          <label for="username" class="user-id-label">User ID</label>
+          <input type="text" id="username" placeholder="e.g. 3kh65fSa4bav5PFIbmiyiJEWpW73" class="form-input" required>
+
           <button type="submit" class="login-btn">Claim Role</button>
         </form>
         <p class="signup-text">Don't have an account? 

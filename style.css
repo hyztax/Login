@@ -450,3 +450,15 @@ body::-webkit-scrollbar {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+
+.user-id-label {
+  display: block;
+  font-weight: bold;
+  color: #b9b7b7;   /* darker grey for "User ID" */
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.form-input::placeholder {
+  color: #999;   /* lighter grey for the example */
+}

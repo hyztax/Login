@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  // Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyBXb9OhOEOo4gXNIv2WcCNmXfnm1x7R2EM",
     authDomain: "velox-c39ad.firebaseapp.com",
@@ -9,45 +10,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     measurementId: "G-X8W755KRF6"
   };
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-
-  const successMessage = document.getElementById("success-message");
-  successMessage.style.display = "block";
-  successMessage.querySelector(".message-title").textContent =
-    `You have successfully claimed the role [tester]`;
-
-  const usersList = document.getElementById("usersList");
-
-  // Get current user from localStorage
-  const currentDisplayName = localStorage.getItem("currentDisplayName");
-
-  // Render the current user immediately
-  if (currentDisplayName) {
-    const li = document.createElement("li");
-    li.textContent = currentDisplayName;
-    usersList.appendChild(li);
+  // Initialize Firebase if not done already
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
   }
 
-  // Listen to loggedInUsers collection and render all users
-  db.collection("loggedInUsers")
-    .orderBy("timestamp")
-    .onSnapshot(snapshot => {
-      // Clear all except current user
-      usersList.innerHTML = "";
-      if (currentDisplayName) {
-        const li = document.createElement("li");
-        li.textContent = currentDisplayName;
-        usersList.appendChild(li);
-      }
+  const db = firebase.firestore();
 
-      snapshot.docs.forEach(doc => {
-        const data = doc.data();
-        if (data.displayName && data.displayName !== currentDisplayName) {
+  // Show success message if displayName in URL
+  const params = new URLSearchParams(window.location.search);
+  const displayName = params.get("displayName");
+  if (displayName) {
+    const successMessage = document.getElementById("success-message");
+    successMessage.style.display = "block";
+    successMessage.querySelector(".message-title").textContent =
+      `You have successfully claimed the role [tester]!`;
+  }
+
+  // Populate logged-in users list
+  const usersList = document.getElementById("usersList");
+
+  try {
+    db.collection("loggedInUsers")
+      .orderBy("timestamp")
+      .onSnapshot(snapshot => {
+        usersList.innerHTML = ""; // Clear list
+        snapshot.docs.forEach(doc => {
           const li = document.createElement("li");
-          li.textContent = data.displayName;
+          li.textContent = doc.data().displayName || doc.id;
           usersList.appendChild(li);
-        }
+        });
       });
-    });
+  } catch (error) {
+    console.error("Failed to fetch logged-in users:", error);
+    usersList.innerHTML = "<li>Failed to load users</li>";
+  }
 });
