@@ -14,8 +14,22 @@
 
   <!-- Login JS -->
   <script src="java.js" defer></script>
+
   
   <link rel="icon" href="logger.images/Velox_logo.png" type="image/png">
+
+ <style>
+
+    #starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+</style>
+
 </head>
 <body>
   <div class="container">
@@ -57,5 +71,9 @@
       </div>
     </div>
   </div>
+
+
+  <canvas id="starfield"></canvas>
+  <script src="stars.js"></script>
 </body>
 </html>

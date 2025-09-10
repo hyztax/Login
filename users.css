@@ -1,7 +1,7 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
     /* Gradient background for depth */
-    background: linear-gradient(135deg, #020202, #222224, #020202);
+    background: linear-gradient(135deg, #020202, #0f0f0f, #020202);
     
     /* Subtle glow inset for modern feel */
     box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);

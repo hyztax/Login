@@ -18,14 +18,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const db = firebase.firestore();
 
   // Show success message if displayName in URL
-  const params = new URLSearchParams(window.location.search);
-  const displayName = params.get("displayName");
-  if (displayName) {
-    const successMessage = document.getElementById("success-message");
-    successMessage.style.display = "block";
-    successMessage.querySelector(".message-title").textContent =
-      `You have successfully claimed the role [tester]!`;
-  }
+const params = new URLSearchParams(window.location.search);
+const displayName = params.get("displayName");
+if (displayName) {
+  const successMessage = document.getElementById("success-message");
+  successMessage.style.display = "block";
+  successMessage.querySelector(".message-title").innerHTML =
+    'You have successfully claimed the role <span style="color: rgb(99, 13, 13);">[tester]</span>!';
+}
+
 
   // Populate logged-in users list
   const usersList = document.getElementById("usersList");
