@@ -438,7 +438,15 @@ body::-webkit-scrollbar {
 }
 
 .login-title .velox-text {
-    background: linear-gradient(90deg, #6283bd, #2575fc, #89bfff, #2575fc);
+    background: linear-gradient(90deg, #6283bd, #4f6da0, #89bfff, #47608a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 100%;
+    animation: shine 3s linear infinite;
+}
+
+.login-title .Discord-text {
+    background: linear-gradient(90deg, #154caa, #2575fc, #3e7fce, #2b5192);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 300% 100%;
